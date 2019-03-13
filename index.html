@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport"
+         content="width=device-width,  initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Vue</title>
+   <script src="node_modules/vue/dist/vue.js"></script>
+</head>
+<style>
+   .redText {
+      color: red;
+   }
+   .blueText{
+      color: #2d43ff;
+   }
+   .bigText {
+      font-size: 20px;
+   }
+   .font1 {
+      font-family: Montserrat ,sans-serif;
+   }
+</style>
+<body>
+
+<div id="app" >
+   {{ message1 }}
+   <h1 v-bind:title="message2"  v-if="seen" >{{ message3 }}</h1>
+</div>
+<hr>
+<div id="list1">
+   <ul  v-if="seen" >
+      <li v-for="whatDo in toLearn">
+         {{ whatDo.task }}
+      </li>
+   </ul>
+   <button v-on:click="seen = !seen"> seen </button>
+   <button v-on:click="hideAppH1"> seen app h1 </button>
+   <input type="text" name="name" v-model="inputName"  >
+   <h2 v-bind:class="myClassObj">{{ h2message }} bye</h2>
+   <button v-on:click="turnOnAlert"> alert is {{isAlert ? 'ON' : 'off'}} ! </button>
+</div>
+<hr>
+<div id="textConst">
+   <h3 v-bind:class="myCheckedStyle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet autem
+      debitis dicta
+      earum eos
+      facere 
+      fugiat, fugit id illum inventore labore laboriosam minus odit quia, quibusdam quis quod reiciendis reprehenderit.</h3>
+   <div>
+      <label for="color1">Color blue <input type="checkbox" value="blue" id="color1" v-model="isChecked"></label><br>
+      <label for="fontSize">font size<input type="checkbox" value="big" id="fontSize" v-model="isChecked"></label><br>
+      <label for="font1">font family<input type="checkbox" value="font1" id="font1" v-model="isChecked"></label><br>
+   </div>
+   <hr>
+   <input type="radio" id="one" value="Один" v-model="picked">
+   <label for="one">Один</label>
+   <br>
+   <input type="radio" id="two" value="Два" v-model="picked" >
+   <label for="two">Два</label>
+   <br>
+   <span>Выбрано: {{ picked }}</span>
+   <hr>
+   <span v-bind:style="[dropStyle, dropStyleSize]"> text for drop list</span>
+   <select name="dropList" v-model="dropList" >
+      <option disabled>выпадающий список</option>
+      <option value="pp1">red</option>
+      <option value="pp2">blue</option>
+   </select>
+</div>
+
+
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<script>
+     app = new Vue({
+        el: '#app',
+        data: {
+            message1: 'hello, Vue!',
+            message2: 'hover text',
+            message3: 'inner text h1',
+            seen: true,
+        }
+    });
+     list1 = new Vue({
+        el: '#list1',
+        data: {
+            toLearn:[
+                {task: "go to sleep"},
+                {task: "drink a beer"},
+                {task: "watch a movie"},
+            ],
+            seen: true,
+            inputName : '',
+            isAlert : false,
+        },
+        computed: {
+            h2message : function () {
+              if (this.inputName === ''){
+                  return 'default text';
+              } else {
+                 return this.inputName ;
+              }
+            },
+            myClassObj : function () {
+               return {
+                   redText :  this.isAlert ,
+               }
+            },
+        },
+         methods : {
+            hideAppH1 : function () {
+                app.seen = !app.seen ;
+            },
+            turnOnAlert : function () {
+                 this.isAlert = !this.isAlert;
+            },
+         }
+    });
+     
+     textTest = new Vue({
+         el : '#textConst',
+         data : {
+             isChecked : [],
+             picked : '',
+             dropList : '',
+             dropStyleRed : {
+                 color : 'red'
+             },
+             dropStyleBlue : {
+                 color : 'blue'
+             },
+             dropStyleSize : {
+                 fontSize : '30px',
+                 fontFamily :"Comic Sans MS",
+             }
+
+         },
+         computed : {
+             myCheckedStyle : function () {
+                // return {color : 'red', fontSize : '20px'}
+                return {
+                    blueText : this.isChecked.indexOf("blue")!== -1,
+                    bigText : this.isChecked.indexOf("big")!== -1,
+                    font1 : this.isChecked.indexOf("font1")!== -1,
+                }
+             },
+             dropStyle : function () {
+               // return this.dropStyleBlue
+                 if (this.dropList === "pp1") return this.dropStyleRed ;
+                 if (this.dropList === "pp2") return this.dropStyleBlue ;
+             }
+         },
+         methods : {
+            findStyle : function (array, value) {
+                return array.indexOf(value);
+            }
+         }
+     });
+
+   // console.log(document.getElementById('inpt1').value);
+</script>
+</body>
+</html>

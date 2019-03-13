@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+    font-family: Montserrat , sans-serif;
+}
+
+.container{
+    width: 75%;
+    margin: 100px auto;
+    border: 2px solid black;
+}
+.movList {
+    list-style-type: none;
+    text-decoration: none;
+}
+.movItem {
+    display: inline-block;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #afafaf;
+    width: 242px;
+    position: relative;
+    cursor: pointer;
+}
+.movItem p {
+    text-transform: capitalize;
+}
+.movItem img  {
+    width: 100%;
+    transform-origin: bottom;
+    transition: .5s;
+}
+.movDetails img {
+    transform: scaleY(0);
+}
+.restDetails {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: .5s;
+    position: absolute;
+}
+.movDetails .restDetails {
+    transform: scaleY(1);
+}

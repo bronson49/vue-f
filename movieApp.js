@@ -18,14 +18,15 @@ Vue.component ('film-item',{
         }
     },
     computed : {},
-    methods : {
-        detailsTrigger : function (event) {
-            event.currentTarget.classList.toggle('movDetails');
-        },
-    },
+    // methods : {
+    //     detailsTrigger : function (event) {
+    //         event.currentTarget.classList.toggle('movDetails');
+    //     },
+    // },
     template: `<li
                class="movItem"
-               @click="detailsTrigger"
+               :class="{movDetails : showDetails}"
+               @click="showDetails = !showDetails"
          >
             <p>{{ seefilm.name }} - {{ seefilm.year }}</p>
             <div class="restDetails">
@@ -36,7 +37,7 @@ Vue.component ('film-item',{
                <p> IMDb position : {{ seefilm.IMDb }} </p>
             </div>
 
-            <img  v-if="!showDetails" :src="seefilm.img" :alt="seefilm.name" :title="seefilm.name">
+            <img  :src="seefilm.img" :alt="seefilm.name" :title="seefilm.name">
          </li>`
 });
 

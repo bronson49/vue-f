@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport"
+         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Title</title>
+   <style>
+      * {
+         box-sizing: border-box;
+      }
+      .wrapper {
+         width: 50%;
+         margin: 50px auto;
+      }
+   </style>
+</head>
+<body>
+
+<div class="wrapper">
+   <form id="form">
+      <input type="text" name="name" placeholder="name" value="my name">
+      <input type="text" name="mail" placeholder="mail" value="my mail">
+   </form>
+   <form id="form1">
+      <input type="text" name="name" placeholder="name" value="my name122">
+      <input type="text" name="mail" placeholder="mail" value="my mail122">
+   </form>
+   <form id="form2">
+      <input type="text" name="name" placeholder="name" value="my 12133">
+      <input type="text" name="mail" placeholder="mail" value="my 2324434">
+      <input type="text" name="phone" placeholder="phone" value="454 11 10">
+   </form>
+</div>
+
+<script>
+   forms = [];
+   // formData = new FormData(document.getElementById('form'));
+   // forms.push(formData);
+   // formData = new FormData(document.getElementById('form1'));
+   // forms.push(formData);
+   // console.log(forms[0].get('name'));
+   // console.log(forms[1].get('name'));
+
+   for (i = 0; i < document.forms.length; i++) {
+       forms.push(new FormData(document.forms[i]));
+       console.log(forms[i].get('name'));
+   }
+</script>
+</body>
+</html>

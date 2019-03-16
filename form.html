@@ -12,41 +12,83 @@
       }
       .wrapper {
          width: 50%;
-         margin: 50px auto;
+         margin: 250px auto;
+         border: 1px solid grey;
+         position: relative;
+      }
+      .basket {
+         position: absolute;
+         background: #b5b5b5;
+         width: 300px; height: max-content ; right: 0;
+         display: flex; justify-content: flex-start; flex-direction: column;
+      }
+      .basket-item-wrapper {
+         border: 1px solid blanchedalmond;
+         display: flex; justify-content: space-around; padding: 5px;
+      }
+      .basket-item-wrapper img {
+         width: 100px;
       }
    </style>
 </head>
 <body>
 
-<div class="wrapper">
-   <form id="form">
-      <input type="text" name="name" placeholder="name" value="my name">
-      <input type="text" name="mail" placeholder="mail" value="my mail">
-   </form>
-   <form id="form1">
-      <input type="text" name="name" placeholder="name" value="my name122">
-      <input type="text" name="mail" placeholder="mail" value="my mail122">
-   </form>
-   <form id="form2">
-      <input type="text" name="name" placeholder="name" value="my 12133">
-      <input type="text" name="mail" placeholder="mail" value="my 2324434">
-      <input type="text" name="phone" placeholder="phone" value="454 11 10">
-   </form>
+<div class="wrapper" id="main">
+   <div class="basket">
+      <basket-item
+            v-for="item in basketList"
+            :orderitem="item"
+            :key="item.id"
+      ></basket-item>
+   </div>
+   <select name="dropList" v-model="formList" >
+      <option disabled>выпадающий список</option>
+      <option value="form0" >first form</option>
+      <option value="form1">second form</option>
+      <option value="form2">third form</option>
+   </select>
+
+   <div v-if="isform0">
+      <form id="form0">
+         <p>FORM 0</p>
+         <p><input type="text" name="name" placeholder="name" value="my name"></p>
+         <p><input type="text" name="mail" placeholder="mail" value="my mail"></p>
+         <p><input type="button" name="btn"  value="order" @click="order"></p>
+         <div v-show="false">
+            <input type="text" value="this is form 0" name="nameId">
+            <input type="text" value="img/Goodfellas.jpg" name="imgPath">
+         </div>
+      </form>
+   </div>
+   <div v-if="isform1">
+      <form id="form1">
+         <p>FORM 1</p>
+         <p><input type="text" name="name" placeholder="name" value="my name122"></p>
+         <p><input type="text" name="mail" placeholder="mail" value="my mail122"></p>
+         <p><input type="button" name="btn"  value="order" @click="order"></p>
+         <div v-show="false">
+            <input type="text" value="this is form 1" name="nameId">
+            <input type="text" value="img/Inception.jpg" name="imgPath">
+         </div>
+      </form>
+   </div>
+   <div v-if="isform2">
+      <form id="form2">
+         <p>FORM 2</p>
+         <p><input type="text" name="name" placeholder="name" value="my 33333"></p>
+         <p><input type="text" name="mail" placeholder="mail" value="my 3333999"></p>
+         <p><input type="text" name="phone" placeholder="phone" value="454 11 10"></p>
+         <p><input type="button" name="btn"  value="order" @click="order"></p>
+         <div v-show="false">
+            <input type="text" value="this is form 2" name="nameId">
+            <input type="text" value="img/spirited.jpg" name="imgPath">
+         </div>
+      </form>
+   </div>
 </div>
 
-<script>
-   forms = [];
-   // formData = new FormData(document.getElementById('form'));
-   // forms.push(formData);
-   // formData = new FormData(document.getElementById('form1'));
-   // forms.push(formData);
-   // console.log(forms[0].get('name'));
-   // console.log(forms[1].get('name'));
 
-   for (i = 0; i < document.forms.length; i++) {
-       forms.push(new FormData(document.forms[i]));
-       console.log(forms[i].get('name'));
-   }
-</script>
+<script src="vue.js"></script>
+<script src="form.js"></script>
 </body>
 </html>

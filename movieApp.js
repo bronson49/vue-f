@@ -41,6 +41,7 @@ Vue.component ('film-item',{
          </li>`
 });
 
+
 app = new Vue ({
    el: '#movieApp',
     data : {

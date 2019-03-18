@@ -2,10 +2,16 @@ formsAll = [];
 
 
 Vue.component('basket-item',{
-    props:['orderitem'],
+    props:['orderitem', 'number'],
+    methods : {},
+
     template : `<div class="basket-item-wrapper">
          <div><img :src="orderitem.img" alt="img"></div>
-         <p> {{ orderitem.descr }}  </p>
+         <div>
+             <p> {{ orderitem.descr }}  </p>
+             <p> item number - {{number}} </p>
+             <button @click="$emit('delete-item', number)"> delete </button>
+         </div>
       </div>`
 });
 
@@ -14,6 +20,7 @@ app = new Vue({
     data : {
         formList : 'form0',
         basketList : [],
+        postFontSize: 1,
     },
     computed : {
         isform0 : function () {
@@ -34,10 +41,13 @@ app = new Vue({
                 img : currentForm.imgPath.value,
                 descr : currentForm.nameId.value,
             });
-
             // for (i = 0; i < formsAll.length  ; i++) {
             //     console.log(formsAll[i].get('name'));
             // }
+        },
+        deleteBasketItem : function (currentItem) {
+            this.basketList.splice(currentItem, 1);
+            formsAll.splice(currentItem, 1);
         },
     },
 });

@@ -10,6 +10,8 @@
       * {
          box-sizing: border-box;
       }
+      body {
+         background: #929292;}
       .wrapper {
          width: 50%;
          margin: 250px auto;
@@ -19,12 +21,12 @@
       .basket {
          position: absolute;
          background: #b5b5b5;
-         width: 300px; height: max-content ; right: 0;
-         display: flex; justify-content: flex-start; flex-direction: column;
+         width: 750px; height: max-content ; right: -200px;
+         display: flex; justify-content: flex-start; flex-wrap: wrap;
       }
       .basket-item-wrapper {
          border: 1px solid blanchedalmond;
-         display: flex; justify-content: space-around; padding: 5px;
+         display: flex; justify-content: space-around; padding: 5px; width: 250px;
       }
       .basket-item-wrapper img {
          width: 100px;
@@ -36,9 +38,11 @@
 <div class="wrapper" id="main">
    <div class="basket">
       <basket-item
-            v-for="item in basketList"
+            v-for="(item, index) in basketList"
             :orderitem="item"
             :key="item.id"
+            :number="index"
+            @delete-item="deleteBasketItem"
       ></basket-item>
    </div>
    <select name="dropList" v-model="formList" >

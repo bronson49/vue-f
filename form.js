@@ -1,5 +1,10 @@
 formsAll = [];
-
+deleteMethod = (current, currentArray, key) =>{
+    Array.isArray(currentArray) ? currentArray.splice(current, 1) : currentArray.removeItem(key);
+};
+addMethod = (currentArray, current, key) => {
+    Array.isArray(currentArray) ? currentArray.push(current) : currentArray.setItem(key, JSON.stringify(current)) ;
+};
 
 Vue.component('basket-item',{
     props:['orderitem', 'number'],
@@ -19,35 +24,31 @@ app = new Vue({
     el : '#main',
     data : {
         formList : 'form0',
-        basketList : [],
-        postFontSize: 1,
+        basketList :  JSON.parse(localStorage.getItem("myBasket")) || [] ,
     },
     computed : {
-        isform0 : function () {
-            if (this.formList === "form0") return  true ;
-        },
-        isform1 : function () {
-            if (this.formList === "form1") return  true ;
-        },
-        isform2 : function () {
-            if (this.formList === "form2") return  true ;
-        },
+        isform0 () { return this.formList === "form0" },
+        isform1 () { return this.formList === "form1" },
+        isform2 () { return this.formList === "form2" },
+
     },
     methods : {
-        order : function () {
-            currentForm = document.forms[0];
-            formsAll.push(new FormData(currentForm));
-            this.basketList.push({
+        order () {
+            let currentForm = document.forms[0];
+            addMethod(formsAll, (new FormData(currentForm)));
+            addMethod(this.basketList, {
                 img : currentForm.imgPath.value,
-                descr : currentForm.nameId.value,
+                descr : currentForm.nameId.value
             });
-            // for (i = 0; i < formsAll.length  ; i++) {
-            //     console.log(formsAll[i].get('name'));
-            // }
+            addMethod(localStorage, formsAll, 'myForms');
+            addMethod(localStorage, this.basketList, 'myBasket');
         },
-        deleteBasketItem : function (currentItem) {
-            this.basketList.splice(currentItem, 1);
-            formsAll.splice(currentItem, 1);
+        deleteBasketItem (currentItem) {
+            deleteMethod(currentItem, formsAll );
+            deleteMethod(currentItem, this.basketList );
+            addMethod(localStorage, formsAll, 'myForms');
+            addMethod(localStorage, this.basketList, 'myBasket');
+           // console.log(formsAll);
         },
     },
 });

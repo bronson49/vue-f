@@ -1,9 +1,21 @@
-formsAll = [];
-deleteMethod = (current, currentArray, key) =>{
-    Array.isArray(currentArray) ? currentArray.splice(current, 1) : currentArray.removeItem(key);
-};
-addMethod = (currentArray, current, key) => {
-    Array.isArray(currentArray) ? currentArray.push(current) : currentArray.setItem(key, JSON.stringify(current)) ;
+
+// deleteMethod = (current, currentArray, key) =>{
+//     Array.isArray(currentArray) ? currentArray.splice(current, 1) : currentArray.removeItem(key);
+// };
+addMethod = (isAdd=true, delIndex ) => {
+    let currentForm = document.forms.myForm;
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', 'form.php', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState !== 4) return;
+        if (xhr.status !== 200) {
+            alert( 'ошибка: ' + (xhr.status ? xhr.statusText : 'запрос не удался') ); return
+        }
+        whatGet = JSON.parse(xhr.responseText);
+        isAdd ? app.formsall.push(whatGet) : app.formsall.splice(delIndex, 1);
+        localStorage.basket = JSON.stringify(app.formsall);
+    };
+    xhr.send(new FormData(currentForm));
 };
 
 Vue.component('basket-item',{
@@ -11,7 +23,7 @@ Vue.component('basket-item',{
     methods : {},
 
     template : `<div class="basket-item-wrapper">
-         <div><img :src="orderitem.img" alt="img"></div>
+         <div><img :src="orderitem.imgPath" alt="img"></div>
          <div>
              <p> {{ orderitem.descr }}  </p>
              <p> item number - {{number}} </p>
@@ -24,7 +36,8 @@ app = new Vue({
     el : '#main',
     data : {
         formList : 'form0',
-        basketList :  JSON.parse(localStorage.getItem("myBasket")) || [] ,
+        formsall : JSON.parse(localStorage.getItem("basket")) || [],
+
     },
     computed : {
         isform0 () { return this.formList === "form0" },
@@ -34,26 +47,11 @@ app = new Vue({
     },
     methods : {
         order () {
-            let currentForm = document.forms[0];
-            addMethod(formsAll, (new FormData(currentForm)));
-            addMethod(this.basketList, {
-                img : currentForm.imgPath.value,
-                descr : currentForm.nameId.value
-            });
-            addMethod(localStorage, formsAll, 'myForms');
-            addMethod(localStorage, this.basketList, 'myBasket');
+            addMethod();
         },
-        deleteBasketItem (currentItem) {
-            deleteMethod(currentItem, formsAll );
-            deleteMethod(currentItem, this.basketList );
-            addMethod(localStorage, formsAll, 'myForms');
-            addMethod(localStorage, this.basketList, 'myBasket');
-           // console.log(formsAll);
+        deleteBasketItem (number) {
+            addMethod(false , number);
         },
     },
 });
 
-// for (i = 0; i < document.forms.length; i++) {
-//     forms.push(new FormData(document.forms[i]));
-//     console.log(forms[i].get('name'));
-// }

@@ -38,7 +38,7 @@
 <div class="wrapper" id="main">
    <div class="basket">
       <basket-item
-            v-for="(item, index) in basketList"
+            v-for="(item, index) in formsall"
             :orderitem="item"
             :key="item.id"
             :number="index"
@@ -53,38 +53,38 @@
    </select>
 
    <div v-if="isform0">
-      <form id="form0">
+      <form id="form0" name="myForm">
          <p>FORM 0</p>
          <p><input type="text" name="name" placeholder="name" value="my name"></p>
          <p><input type="text" name="mail" placeholder="mail" value="my mail"></p>
          <p><input type="button" name="btn"  value="order" @click="order"></p>
          <div v-show="false">
-            <input type="text" value="this is form 0" name="nameId">
+            <input type="text" value="this is form 0" name="descr">
             <input type="text" value="img/Goodfellas.jpg" name="imgPath">
          </div>
       </form>
    </div>
    <div v-if="isform1">
-      <form id="form1">
+      <form id="form1" name="myForm">
          <p>FORM 1</p>
          <p><input type="text" name="name" placeholder="name" value="my name122"></p>
          <p><input type="text" name="mail" placeholder="mail" value="my mail122"></p>
          <p><input type="button" name="btn"  value="order" @click="order"></p>
          <div v-show="false">
-            <input type="text" value="this is form 1" name="nameId">
+            <input type="text" value="this is form 1" name="descr">
             <input type="text" value="img/Inception.jpg" name="imgPath">
          </div>
       </form>
    </div>
-   <div v-if="isform2">
-      <form id="form2">
+   <div v-if="isform2" >
+      <form id="form2" name="myForm">
          <p>FORM 2</p>
          <p><input type="text" name="name" placeholder="name" value="my 33333"></p>
          <p><input type="text" name="mail" placeholder="mail" value="my 3333999"></p>
          <p><input type="text" name="phone" placeholder="phone" value="454 11 10"></p>
          <p><input type="button" name="btn"  value="order" @click="order"></p>
          <div v-show="false">
-            <input type="text" value="this is form 2" name="nameId">
+            <input type="text" value="this is form 2" name="descr">
             <input type="text" value="img/spirited.jpg" name="imgPath">
          </div>
       </form>
